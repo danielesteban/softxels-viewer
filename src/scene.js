@@ -112,8 +112,8 @@ class Gameplay extends Scene {
   onAnimationTick(delta, time, renderer) {
     const { input, isLoading, player, world } = this;
     input.onAnimationTick(delta);
-    this.processPlayerInput(renderer.xr);
     this.processPlayerMovement(delta, renderer.xr);
+    this.processPlayerInput(renderer.xr);
     if (Config.autoUpdateRenderRadius && !isLoading) {
       world.updateChunks(player.head);
     }
