@@ -99,7 +99,7 @@ class PostProcessing {
           'float perspectiveDepthToViewZ(const in float invClipZ, const in float near, const in float far) {',
           '  return (near * far) / ((far - near) * invClipZ - far);',
           '}',
-          'vec3 LinearTosRGB(in vec3 value) {',
+          'vec3 LinearTosRGB(const in vec3 value) {',
           '  return vec3(mix(pow(value.rgb, vec3(0.41666)) * 1.055 - vec3(0.055), value.rgb * 12.92, vec3(lessThanEqual(value.rgb, vec3(0.0031308)))));',
           '}',
           'vec3 composite(const in vec2 uv) {',
