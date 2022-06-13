@@ -20,7 +20,9 @@ export default {
   plugins: [
     alias({
       entries: {
-        'softxels-viewer-config': process.env.CONFIG || path.resolve(__dirname, 'config.js'),
+        'softxels-viewer-config': (
+          process.env.CONFIG || path.resolve(__dirname, `config.${production ? 'prod' : 'dev'}.js`)
+        ),
       },
     }),
     copy({

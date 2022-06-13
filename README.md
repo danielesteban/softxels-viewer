@@ -27,7 +27,7 @@ npm start
 
 ### Build with custom config
 
-By default, it will use [./config.js](./config.js) but you can also use your own:
+By default, it will use [config.dev.js](./config.dev.js) & [config.prod.js](./config.prod.js) but you can also specify your own:
 
 ```js
 /* myconfig.js */
