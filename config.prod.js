@@ -1,4 +1,4 @@
-const CDN = 'https://rawcdn.githack.com/danielesteban/softxels-example-worlds/561b9e385621338bd82216e6eab25bec53f65a4e/';
+const CDN = 'https://rawcdn.githack.com/danielesteban/softxels-example-worlds/b9eed8c0cafc0f65dc0a64c29261c552012007fb/';
 export default {
   enableDragAndDrop: true,
   initialWorldURL: `${CDN}world1.bin`,

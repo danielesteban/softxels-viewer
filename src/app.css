@@ -192,7 +192,6 @@ body.pointerlock #title, body.pointerlock #debug, body.pointerlock #settings, bo
   display: none;
 }
 
-
 @keyframes fade {
   from {
     backdrop-filter: blur(0px);
