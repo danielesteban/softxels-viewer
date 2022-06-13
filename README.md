@@ -1,6 +1,8 @@
 softxels-viewer
 ==
 
+[![screenshot](screenshot.png)](https://softxels-viewer.gatunes.com/)
+
 ### Dev environment
 
 ```bash
