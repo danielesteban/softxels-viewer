@@ -15,6 +15,7 @@ const _direction = new Vector3();
 const _forward = new Vector3();
 const _right = new Vector3();
 const _position = new Vector3();
+const _chunk = new Vector3();
 const _voxel = new Vector3();
 const _worldUp = new Vector3(0, 1, 0);
 const _matrix = new Matrix4();
@@ -289,20 +290,16 @@ class Gameplay extends Scene {
     for (let i = 0; i < 2; i++) {
       for (let j = 0; j < 2; j++) {
         for (let k = 0; k < 2; k++) {
-          let px = x + i;
-          let py = y + j;
-          let pz = z + k;
-          const chunkX = Math.floor(px / world.chunkSize);
-          const chunkY = Math.floor(py / world.chunkSize);
-          const chunkZ = Math.floor(pz / world.chunkSize);
-          const chunk = world.dataChunks.get(`${chunkX}:${chunkY}:${chunkZ}`);
-          if (!chunk) {
+          _position.set(x + i, y + j, z + k);
+          _chunk.copy(_position).divideScalar(world.chunkSize).floor();
+          const data = world.dataChunks.get(`${_chunk.x}:${_chunk.y}:${_chunk.z}`);
+          if (!data) {
             return false;
           }
-          px -= (chunkX * world.chunkSize);
-          py -= (chunkY * world.chunkSize);
-          pz -= (chunkZ * world.chunkSize);
-          const value = chunk[(pz * world.chunkSize * world.chunkSize + py * world.chunkSize + px) * 4];
+          _position.sub(_chunk.multiplyScalar(world.chunkSize));
+          const value = data[
+            (_position.z * world.chunkSize * world.chunkSize + _position.y * world.chunkSize + _position.x) * 4
+          ];
           if (value >= 0x80) {
             return true;
           }
