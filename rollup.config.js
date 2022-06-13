@@ -1,4 +1,3 @@
-import fs from 'fs';
 import path from 'path';
 import alias from '@rollup/plugin-alias';
 import copy from 'rollup-plugin-copy';
@@ -37,12 +36,7 @@ export default {
       minimize: production,
     }),
     ...(production ? [
-      terser(),
-      {
-        writeBundle() {
-          fs.writeFileSync(path.join(outputPath, 'CNAME'), 'softxels-viewer.gatunes.com');
-        },
-      },
+      terser({ format: { comments: false } }),
     ] : [
       serve({
         contentBase: outputPath,
