@@ -26,10 +26,8 @@ export default {
       },
     }),
     copy({
-      targets: [
-        { src: 'src/index.html', dest: 'dist' },
-        { src: 'screenshot.png', dest: 'dist' },
-      ],
+      targets: [{ src: 'public/*', dest: 'dist' }],
+      copyOnce: !production,
     }),
     resolve({
       browser: true,

@@ -1,7 +1,7 @@
 softxels-viewer
 ==
 
-[![screenshot](screenshot.png)](https://softxels-viewer.gatunes.com/)
+[![screenshot](public/screenshot.png)](https://softxels-viewer.gatunes.com/)
 
 ### Generate worlds from pointclouds
 
@@ -27,7 +27,7 @@ npm start
 
 ### Build with custom config
 
-By default, it will use [config.dev.js](./config.dev.js) & [config.prod.js](./config.prod.js) but you can also specify your own:
+By default, it will use [config.dev.js](config.dev.js) & [config.prod.js](config.prod.js) but you can also specify your own:
 
 ```js
 /* myconfig.js */
