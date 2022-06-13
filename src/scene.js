@@ -96,7 +96,7 @@ class Gameplay extends Scene {
           world.updateChunks(world.localToWorld(_position.set(0, world.chunkSize * world.renderRadius * 0.25, 0)));
         }
         player.position.fromArray(metadata.spawn);
-        player.position.y = player.targetFloor = this.ground(player.position, 4);
+        player.position.y = player.targetFloor = this.ground(player.position);
         player.isWalking = player.targetFloor !== -1;
         player.targetPosition.copy(player.position);
         player.camera.position.set(0, 1.6, 0);
@@ -171,7 +171,7 @@ class Gameplay extends Scene {
     if (interact) {
       player.isWalking = !player.isWalking;
       if (player.isWalking) {
-        const y = this.ground(player.targetPosition, 4);
+        const y = this.ground(player.targetPosition);
         if (y !== -1) {
           player.targetFloor = y;
         }
@@ -242,7 +242,7 @@ class Gameplay extends Scene {
         .add(player.targetPosition)
         .addScaledVector(_direction, step);
       if (player.isWalking) {
-        const floor = this.ground(_forward, 4);
+        const floor = this.ground(_forward);
         if (floor !== -1 && Math.abs(floor - player.targetPosition.y) < 2) {
           player.targetPosition.addScaledVector(_direction, step);
           player.targetFloor = floor;
@@ -267,7 +267,7 @@ class Gameplay extends Scene {
     camera.getWorldPosition(player.head);
   }
 
-  ground(position, height = 4) {
+  ground(position) {
     const { world } = this;
     world.worldToLocal(_voxel.copy(position)).floor();
     if (this.test(_voxel.x, _voxel.y, _voxel.z)) {
@@ -277,11 +277,6 @@ class Gameplay extends Scene {
     for (; _voxel.y >= 0; _voxel.y--) {
       if (!this.test(_voxel.x, _voxel.y, _voxel.z)) {
         continue;
-      }
-      for (let h = 1; h <= height; h++) {
-        if (this.test(_voxel.x, _voxel.y + h, _voxel.z)) {
-          return -1;
-        }
       }
       _voxel.y++;
       return world.localToWorld(_voxel).y;
