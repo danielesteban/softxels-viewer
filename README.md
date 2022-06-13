@@ -3,6 +3,15 @@ softxels-viewer
 
 [![screenshot](screenshot.png)](https://softxels-viewer.gatunes.com/)
 
+### Generate worlds from pointclouds
+
+Use [softxels-voxelizer](https://github.com/danielesteban/softxels/tree/master/voxelizer) to create a world from a PLY. Then just drag & drop the BIN over the viewer window.
+
+```bash
+npm install -g softxels-voxelizer
+softxels-voxelizer -i "input.ply" -o "output.bin"
+```
+
 ### Dev environment
 
 ```bash
