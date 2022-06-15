@@ -27,7 +27,17 @@ const postprocessing = new PostProcessing({
   ),
   samples: 4,
 });
-const scene = new Scene({ camera, renderer });
+const scene = new Scene({
+  camera,
+  options: location.hash.slice(2).split('/').reduce((keys, option) => {
+    if (option) {
+      const [key, value] = option.split(':');
+      keys[(key || '').trim()] = (value || '').trim();
+    }
+    return keys;
+  }, {}),
+  renderer,
+});
 window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   postprocessing.onResize(window.innerWidth, window.innerHeight)

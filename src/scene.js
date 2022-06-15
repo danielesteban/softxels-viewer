@@ -22,11 +22,11 @@ const _matrix = new Matrix4();
 const _transform = new Matrix4();
 
 class Gameplay extends Scene {
-  constructor({ camera, renderer }) {
+  constructor({ camera, options, renderer }) {
     super();
-    
+
     this.world = new World({
-      renderRadius: Config.renderRadius,
+      renderRadius: options.renderRadius ? parseInt(options.renderRadius, 10) : Config.renderRadius,
     });
     this.add(this.world);
 
@@ -51,11 +51,13 @@ class Gameplay extends Scene {
       window.addEventListener('drop', this.onDrop, false);
     }
 
-    if (Config.initialWorldURL) {
+    if (options.ipfs) {
+      this.load(`https://ipfs.io/ipfs/${options.ipfs}`);
+    } else if (Config.initialWorldURL) {
       this.load(Config.initialWorldURL);
     }
 
-    if (Config.worldMenu) {
+    if (Config.worldMenu && !options.ipfs) {
       this.menu = new Menu(Config.worldMenu, (world) => {
         this.world.reset();
         this.load(world.url);
