@@ -28,6 +28,11 @@ class Gameplay extends Scene {
     this.world = new World({ renderRadius: Config.renderRadius });
     this.add(this.world);
 
+    this.dom = {
+      loading: document.getElementById('loading'),
+      meta: document.getElementById('meta'),
+    };
+
     this.input = new Input(renderer.domElement, renderer.xr);
     this.player = new Group();
     this.player.camera = camera;
@@ -37,8 +42,6 @@ class Gameplay extends Scene {
     this.player.targetRotation = this.player.camera.rotation.clone();
     this.player.add(camera);
     this.add(this.player);
-
-    this.loading = document.getElementById('loading');
 
     if (Config.enableDragAndDrop) {
       this.onDragEnter = this.onDragEnter.bind(this);
@@ -64,7 +67,7 @@ class Gameplay extends Scene {
   }
 
   onUnload() {
-    const { input, loading, menu, world } = this;
+    const { dom: { loading }, input, menu, world } = this;
     input.dispose();
     if (loading) loading.classList.remove('enabled');
     if (menu) menu.dispose();
@@ -77,7 +80,7 @@ class Gameplay extends Scene {
   }
 
   load(buffer) {
-    const { loading, player, world } = this;
+    const { dom: { loading, meta }, player, world } = this;
     this.isLoading = true;
     if (loading) loading.classList.add('enabled');
     (typeof buffer === 'string' ? (
@@ -103,6 +106,12 @@ class Gameplay extends Scene {
         player.camera.getWorldPosition(player.head);
         this.isLoading = false;
         if (loading) loading.classList.remove('enabled');
+        if (meta) {
+          let { author, name } = metadata;
+          author = `${author || ''}`.trim().slice(0, 50);
+          name = `${name || ''}`.trim().slice(0, 50);
+          meta.innerText = (author || name) ? `${name}${author ? ` by ${author}` : ''}` : 'softxels-viewer';
+        }
       });
   }
 

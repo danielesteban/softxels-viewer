@@ -40,6 +40,7 @@ const scene = new Scene({
 });
 
 window.addEventListener('contextmenu', (e) => e.preventDefault(), false);
+window.addEventListener('hashchange', () => location.reload(), false);
 window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   postprocessing.onResize(window.innerWidth, window.innerHeight)
