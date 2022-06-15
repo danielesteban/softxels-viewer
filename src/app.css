@@ -124,7 +124,7 @@ a#vfx {
 }
 
 #vr {
-  display: flex;
+  display: none;
   position: absolute;
   bottom: 1rem;
   left: 1rem;
@@ -138,6 +138,10 @@ a#vfx {
   background: #333;
   border: 1px solid #222;
   border-radius: 4px;
+}
+
+#vr.enabled {
+  display: flex;
 }
 
 #worlds {

@@ -66,7 +66,7 @@ class Gameplay extends Scene {
   onUnload() {
     const { input, loading, menu, world } = this;
     input.dispose();
-    loading.classList.remove('enabled');
+    if (loading) loading.classList.remove('enabled');
     if (menu) menu.dispose();
     world.dispose();
     if (Config.enableDragAndDrop) {
@@ -79,7 +79,7 @@ class Gameplay extends Scene {
   load(buffer) {
     const { loading, player, world } = this;
     this.isLoading = true;
-    loading.classList.add('enabled');
+    if (loading) loading.classList.add('enabled');
     (typeof buffer === 'string' ? (
       fetch(buffer).then((res) => res.arrayBuffer())
     ) : (
@@ -102,7 +102,7 @@ class Gameplay extends Scene {
         player.targetRotation.copy(player.camera.rotation);
         player.camera.getWorldPosition(player.head);
         this.isLoading = false;
-        loading.classList.remove('enabled');
+        if (loading) loading.classList.remove('enabled');
       });
   }
 
