@@ -2,7 +2,6 @@ const CDN = 'https://rawcdn.githack.com/danielesteban/softxels-example-worlds/b9
 export default {
   enableDragAndDrop: true,
   initialWorldURL: `${CDN}world1.bin`,
-  renderRadius: 10,
   worldMenu: [
     { name: 'Museum', url: `${CDN}world1.bin` },
     { name: 'Bedroom', url: `${CDN}world2.bin` },

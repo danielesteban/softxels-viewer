@@ -35,7 +35,7 @@ export default {
   autoUpdateRenderRadius: false, // Enables loading/unloading of chunks as the camera moves.
   enableDragAndDrop: false, // Enables/Disables Drag & Drop of world files.
   initialWorldURL: false, // URL of a world file to be initially loaded (or false for none).
-  renderRadius: 10, // Radius around the camera that chunks are loaded.
+  renderRadius: 10, // Radius around the camera that chunks are loaded when autoUpdateRenderRadius is enabled.
   worldMenu: [ // Displays a menu to load worlds
     { name: 'Example', url: 'https://example.com/world.bin' },
   ],

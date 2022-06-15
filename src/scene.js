@@ -25,9 +25,7 @@ class Gameplay extends Scene {
   constructor({ camera, options, renderer }) {
     super();
 
-    this.world = new World({
-      renderRadius: options.renderRadius ? parseInt(options.renderRadius, 10) : Config.renderRadius,
-    });
+    this.world = new World({ renderRadius: Config.renderRadius });
     this.add(this.world);
 
     this.input = new Input(renderer.domElement, renderer.xr);
@@ -94,10 +92,7 @@ class Gameplay extends Scene {
         })
       )))
       .then((buffer) => {
-        const metadata = world.importChunks(buffer);
-        if (!Config.autoUpdateRenderRadius) {
-          world.updateChunks(world.localToWorld(_position.set(0, world.chunkSize * world.renderRadius * 0.25, 0)));
-        }
+        const metadata = world.importChunks(buffer, !Config.autoUpdateRenderRadius);
         player.position.fromArray(metadata.spawn);
         player.position.y = player.targetFloor = this.ground(player.position);
         player.isWalking = player.targetFloor !== -1;
