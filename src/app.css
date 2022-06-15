@@ -171,7 +171,7 @@ a#vfx {
   z-index: 10000;
 }
 
-body.pointerlock #title, body.pointerlock #debug, body.pointerlock #settings, body.pointerlock #credits, body.pointerlock #vr, body.pointerlock #worlds {
+body.pointerlock #title, body.pointerlock #debug, body.pointerlock #settings, body.pointerlock #credits, body.pointerlock #ribbon, body.pointerlock #vr, body.pointerlock #worlds {
   display: none;
 }
 
