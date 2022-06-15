@@ -110,7 +110,11 @@ class Gameplay extends Scene {
           let { author, name } = metadata;
           author = `${author || ''}`.trim().slice(0, 50);
           name = `${name || ''}`.trim().slice(0, 50);
-          meta.innerText = (author || name) ? `${name}${author ? ` by ${author}` : ''}` : 'softxels-viewer';
+          meta.innerText = (author || name) ? (
+           `${name}${author && name ? ' by ' : ''}${author}`
+          ) : (
+            'softxels-viewer'
+          );
         }
       });
   }
