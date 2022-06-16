@@ -77,6 +77,13 @@ renderer.setAnimationLoop(() => {
   }
 });
 
+if (document.getElementById('error')) {
+  const [reload] = document.getElementById('error').getElementsByTagName('a');
+  if (reload) {
+    reload.addEventListener('click', () => location.reload(), false);
+  }
+}
+
 if (document.getElementById('debug')) {
   const GL = renderer.getContext();
   const ext = GL.getExtension('WEBGL_debug_renderer_info');
@@ -164,7 +171,7 @@ if (document.getElementById('vr') && navigator.xr) {
       return;
     }
     const vr = document.getElementById('vr');
-    const label = vr.getElementsByTagName('span')[0];
+    const [label] = vr.getElementsByTagName('span');
     vr.classList.add('enabled');
     if (label) label.innerText = 'Enter VR';
     let currentSession = null;

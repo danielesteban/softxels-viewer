@@ -29,6 +29,7 @@ class Gameplay extends Scene {
     this.add(this.world);
 
     this.dom = {
+      error: document.getElementById('error'),
       loading: document.getElementById('loading'),
       meta: document.getElementById('meta'),
     };
@@ -67,8 +68,9 @@ class Gameplay extends Scene {
   }
 
   onUnload() {
-    const { dom: { loading }, input, menu, world } = this;
+    const { dom: { error, loading }, input, menu, world } = this;
     input.dispose();
+    if (error) error.classList.remove('enabled');
     if (loading) loading.classList.remove('enabled');
     if (menu) menu.dispose();
     world.dispose();
@@ -80,11 +82,18 @@ class Gameplay extends Scene {
   }
 
   load(buffer) {
-    const { dom: { loading, meta }, player, world } = this;
+    const { dom: { error, loading, meta }, player, world } = this;
     this.isLoading = true;
+    if (error) error.classList.remove('enabled');
     if (loading) loading.classList.add('enabled');
     (typeof buffer === 'string' ? (
-      fetch(buffer).then((res) => res.arrayBuffer())
+      fetch(buffer).then((res) => {
+        const { status } = res;
+        if (status < 200 || status >= 400) {
+          throw new Error(`${status}`);
+        }
+        return res.arrayBuffer();
+      })
     ) : (
       Promise.resolve(buffer)
     ))
@@ -104,8 +113,6 @@ class Gameplay extends Scene {
         player.camera.rotation.set(0, 0, 0, 'YXZ');
         player.targetRotation.copy(player.camera.rotation);
         player.camera.getWorldPosition(player.head);
-        this.isLoading = false;
-        if (loading) loading.classList.remove('enabled');
         if (meta) {
           let { author, name } = metadata;
           author = `${author || ''}`.trim().slice(0, 50);
@@ -116,6 +123,19 @@ class Gameplay extends Scene {
             'softxels-viewer'
           );
         }
+      })
+      .catch((e) => {
+        if (error) {
+          error.classList.add('enabled');
+          const [feedback] = error.getElementsByTagName('div');
+          if (feedback) feedback.innerText = `Error: ${e.message}`;
+        } else {
+          console.err(e);
+        }
+      })
+      .finally(() => {
+        this.isLoading = false;
+        if (loading) loading.classList.remove('enabled');
       });
   }
 
