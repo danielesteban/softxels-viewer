@@ -198,6 +198,5 @@ if (document.getElementById('vr') && navigator.xr) {
             });
         });
     }, false);
-    document.body.appendChild(toggle);
   });
 }
