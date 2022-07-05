@@ -3,6 +3,7 @@ import {
   Group,
   MathUtils,
   Matrix4,
+  MeshBasicMaterial,
   Scene,
   Vector3,
 } from 'three';
@@ -25,7 +26,46 @@ class Gameplay extends Scene {
   constructor({ camera, options, renderer }) {
     super();
 
-    this.world = new World({ renderRadius: Config.renderRadius });
+    const material = new MeshBasicMaterial({ vertexColors: true });
+    material.onBeforeCompile = (material) => {
+      material.vertexShader = material.vertexShader
+        .replace(
+          '#include <common>',
+          [
+            'varying vec3 fragNormal;',
+            '#include <common>',
+          ].join('\n')
+        )
+        .replace(
+          '#if defined ( USE_ENVMAP ) || defined ( USE_SKINNING )',
+          '#if 1'
+        )
+        .replace(
+          '#include <begin_vertex>',
+          [
+            'fragNormal = transformedNormal;',
+            '#include <begin_vertex>',
+          ].join('\n')
+        );
+      material.fragmentShader = material.fragmentShader
+        .replace(
+          '#include <common>',
+          [
+            'varying vec3 fragNormal;',
+            'layout(location = 1) out vec4 pc_fragNormal;',
+            '#include <common>',
+          ].join('\n')
+        )
+        .replace(
+          '#include <dithering_fragment>',
+          [
+            '#include <dithering_fragment>',
+            'pc_fragNormal = vec4(normalize(fragNormal), 0.0);',
+          ].join('\n')
+        );
+    };
+
+    this.world = new World({ chunkMaterial: material, renderRadius: Config.renderRadius });
     this.add(this.world);
 
     this.dom = {
